@@ -1,3 +1,8 @@
+
+import { useState } from "react"
+import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
+
 import {
     Card,
     CardContent,
@@ -13,33 +18,55 @@ import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 const formSchema = z.object({
-    usuario: z.string()
-              .min(5,"Debe contener como minimo 5 caracteres")
-              .max(20,"Debe contener como maximo 20 caracteres"),
+    username: z.string()
+        .min(5, "Debe contener como minimo 5 caracteres")
+        .max(20, "Debe contener como maximo 20 caracteres"),
     password: z.string()
-               .min(5,"Debe contener como minimo 5 caracteres")
-               .max(20,"Debe contener como maximo 20 caracteres"),
+        .min(5, "Debe contener como minimo 5 caracteres")
+        .max(20, "Debe contener como maximo 20 caracteres"),
 })
 
 export const LoginPage = () => {
 
+    const [loading, setLoading] = useState(false);
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            usuario: "",
+            username: "",
             password: "",
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log("llega")
-        console.log(values)
+   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+
+        setLoading(true);
+
+        // Conexion con el backend usando fetch
+        try{
+            const respuesta = await fetch("http://localhost:3000/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", },
+                body: JSON.stringify(values),
+            })
+            const data = await respuesta.json();
+            form.reset();
+            setLoading(false);
+        }catch(error){
+            console.log('llega');
+            console.log(error);
+            form.reset();
+            setLoading(false);
+        }
+
     }
 
     return (
         <div className="flex items-center justify-center">
+             <Toaster />
             <Card className="w-11/12 md:w-[450px] mt-5 md:mt-10">
 
                 <CardHeader className="text-center">
@@ -52,12 +79,14 @@ export const LoginPage = () => {
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                             <FormField
                                 control={form.control}
-                                name="usuario"
+                                name="username"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel> Usuario </FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Nombre de usuario" {...field} />
+                                            <Input
+                                                disabled={loading}
+                                                placeholder="Nombre de usuario" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -70,16 +99,33 @@ export const LoginPage = () => {
                                     <FormItem>
                                         <FormLabel> Contraseña </FormLabel>
                                         <FormControl>
-                                            <Input type="password" placeholder="Ingresar contraseña" {...field} />
+                                            <Input
+                                                disabled={loading}
+                                                type="password"
+                                                placeholder="Ingresar contraseña" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
-                            <Button 
-                                className="w-full" 
+                            <Button
+                                disabled={loading}
+                                className="w-full"
                                 type="submit"
-                            > Ingresar </Button>
+                            >
+
+                                {
+                                    loading ? (
+                                        <div className="flex items-center">
+                                            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                                            <span> Cargando </span>
+                                        </div>
+                                    ) : (
+                                        <span> Ingresar </span>
+                                    )
+                                }
+
+                            </Button>
                         </form>
                     </Form>
                 </CardContent>
