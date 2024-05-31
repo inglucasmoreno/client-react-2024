@@ -1,7 +1,7 @@
 
 import { useState } from "react"
 import { Toaster } from "@/components/ui/sonner"
-import { toast } from "sonner"
+import { backendApi } from "@/api"
 
 import {
     Card,
@@ -19,6 +19,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ReloadIcon } from "@radix-ui/react-icons"
+import { toast } from "sonner"
+import { useNavigate } from "react-router-dom"
 
 const formSchema = z.object({
     username: z.string()
@@ -31,6 +33,8 @@ const formSchema = z.object({
 
 export const LoginPage = () => {
 
+    const navigate = useNavigate();
+
     const [loading, setLoading] = useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -41,23 +45,24 @@ export const LoginPage = () => {
         },
     })
 
-   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
 
         setLoading(true);
 
-        // Conexion con el backend usando fetch
-        try{
-            const respuesta = await fetch("http://localhost:3000/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json", },
-                body: JSON.stringify(values),
-            })
-            const data = await respuesta.json();
+        try {
+            const { data } = await backendApi.post("/auth/login", values);
+            toast("Conexion correcta!");
             form.reset();
             setLoading(false);
-        }catch(error){
-            console.log('llega');
-            console.log(error);
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('userLogin', data.usuario.userId);
+            localStorage.setItem('token-init-date', String(new Date().getTime()) );
+
+            // Navegar a la pagina de inicio con el react-router-dom
+            navigate("/home");
+                        
+        } catch (error: any) {
+            toast(error.response.data.message);
             form.reset();
             setLoading(false);
         }
@@ -66,7 +71,7 @@ export const LoginPage = () => {
 
     return (
         <div className="flex items-center justify-center">
-             <Toaster />
+            <Toaster className="" />
             <Card className="w-11/12 md:w-[450px] mt-5 md:mt-10">
 
                 <CardHeader className="text-center">
