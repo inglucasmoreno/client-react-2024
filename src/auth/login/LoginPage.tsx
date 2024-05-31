@@ -50,7 +50,9 @@ export const LoginPage = () => {
         setLoading(true);
 
         try {
+
             const { data } = await backendApi.post("/auth/login", values);
+            console.log(data);
             toast("Conexion correcta!");
             form.reset();
             setLoading(false);
@@ -60,7 +62,7 @@ export const LoginPage = () => {
 
             // Navegar a la pagina de inicio con el react-router-dom
             navigate("/home");
-                        
+
         } catch (error: any) {
             toast(error.response.data.message);
             form.reset();

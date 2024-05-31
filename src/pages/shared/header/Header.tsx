@@ -7,7 +7,6 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button";
 
 export const Header = () => {
 
@@ -19,8 +18,8 @@ export const Header = () => {
   }
 
   return (
-    <div className="w-full">
-      <div className="py-5 px-10 bg-slate-100 border-b border-gray-300 shadow-b shadow-md">
+    <div>
+      <div className="py-5 px-10 bg-slate-100 border-b border-gray-300">
         <div className="container flex items-center justify-between">
           {/* <span className="font-semibold text-xl"> Equinoccio Technology </span> */}
           <div></div>

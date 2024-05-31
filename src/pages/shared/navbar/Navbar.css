@@ -1,0 +1,9 @@
+
+
+.navItem {
+    @apply hover:bg-opacity-80 cursor-pointer
+}
+
+.seccionItem {
+    @apply flex items-center cursor-pointer hover:opacity-80 font-semibold text-sm
+}

@@ -3,12 +3,10 @@ import { Navbar } from "../navbar/Navbar"
 
 export const Layout = ({ children }: any) => {
   return (
-    <div>
-      <div className="flex">
-        <Navbar />
+    <div className="flex items-center">
+      <Navbar />
+      <div className="h-screen w-full">
         <Header />
-      </div>
-      <div className="h-screen">
         {children}
       </div>
     </div>
