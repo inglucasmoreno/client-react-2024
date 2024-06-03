@@ -1,7 +1,4 @@
-
-import { useState } from "react"
-import { Toaster } from "@/components/ui/sonner"
-import { backendApi } from "@/api"
+import { useForm } from "react-hook-form"
 
 import {
     Card,
@@ -12,30 +9,26 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { ReloadIcon } from "@radix-ui/react-icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ReloadIcon } from "@radix-ui/react-icons"
-import { toast } from "sonner"
-import { useNavigate } from "react-router-dom"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useAuth } from "@/hooks/useAuth"
+import { z } from "zod"
 
 const formSchema = z.object({
     username: z.string()
-        .min(5, "Debe contener como minimo 5 caracteres")
+        .min(4, "Debe contener como minimo 4 caracteres")
         .max(20, "Debe contener como maximo 20 caracteres"),
     password: z.string()
-        .min(5, "Debe contener como minimo 5 caracteres")
+        .min(4, "Debe contener como minimo 4 caracteres")
         .max(20, "Debe contener como maximo 20 caracteres"),
 })
 
 export const LoginPage = () => {
 
-    const navigate = useNavigate();
-
-    const [loading, setLoading] = useState(false);
+    const { login, isLoading } = useAuth();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -46,34 +39,12 @@ export const LoginPage = () => {
     })
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-
-        setLoading(true);
-
-        try {
-
-            const { data } = await backendApi.post("/auth/login", values);
-            console.log(data);
-            toast("Conexion correcta!");
-            form.reset();
-            setLoading(false);
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('userLogin', data.usuario.userId);
-            localStorage.setItem('token-init-date', String(new Date().getTime()) );
-
-            // Navegar a la pagina de inicio con el react-router-dom
-            navigate("/home");
-
-        } catch (error: any) {
-            toast(error.response.data.message);
-            form.reset();
-            setLoading(false);
-        }
-
+        login(values);
+        form.reset();
     }
 
     return (
         <div className="flex items-center justify-center">
-            <Toaster className="" />
             <Card className="w-11/12 md:w-[450px] mt-5 md:mt-10">
 
                 <CardHeader className="text-center">
@@ -92,7 +63,7 @@ export const LoginPage = () => {
                                         <FormLabel> Usuario </FormLabel>
                                         <FormControl>
                                             <Input
-                                                disabled={loading}
+                                                disabled={isLoading}
                                                 placeholder="Nombre de usuario" {...field} />
                                         </FormControl>
                                         <FormMessage />
@@ -107,7 +78,8 @@ export const LoginPage = () => {
                                         <FormLabel> Contraseña </FormLabel>
                                         <FormControl>
                                             <Input
-                                                disabled={loading}
+                                                disabled={isLoading}
+                                                autoComplete="false"
                                                 type="password"
                                                 placeholder="Ingresar contraseña" {...field} />
                                         </FormControl>
@@ -116,13 +88,13 @@ export const LoginPage = () => {
                                 )}
                             />
                             <Button
-                                disabled={loading}
+                                disabled={isLoading}
                                 className="w-full"
                                 type="submit"
                             >
 
                                 {
-                                    loading ? (
+                                    isLoading ? (
                                         <div className="flex items-center">
                                             <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                                             <span> Cargando </span>

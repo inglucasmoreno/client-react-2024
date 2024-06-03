@@ -10,11 +10,19 @@ import './Navbar.css';
 
 import { GrConfigure } from "react-icons/gr";
 import { IoHomeOutline } from "react-icons/io5";
-import { HiOutlineDesktopComputer } from "react-icons/hi";
-import { RiFileListLine } from "react-icons/ri";
-import { BsEnvelopePaper } from "react-icons/bs";
+// import { HiOutlineDesktopComputer } from "react-icons/hi";
+// import { RiFileListLine } from "react-icons/ri";
+// import { BsEnvelopePaper } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+
+  const navigate = useNavigate();
+
+  const navegacion = (url: string) => {
+      navigate(url);
+  }
+
   return (
     <div>
       <div className="w-[300px] border-r border-gray-300 h-screen bg-slate-100">
@@ -22,31 +30,17 @@ export const Navbar = () => {
           <p className="px-2 text-lg text-slate-900 font-semibold text-center"> Equinoccio Technology </p>
           <p className="text-slate-800 text-center text-sm" > Template de sistema </p>
         </div>
-        <div className="px-4 mt-10">
-          <p className="text-sm mb-3 flex items-center cursor-pointer hover:opacity-80 font-semibold">
+        
+        <div className="px-4 mt-5">
+          
+          <p onClick={ () => navegacion('/home') } className="text-sm mb-3 flex items-center cursor-pointer hover:opacity-80 font-semibold">
             <IoHomeOutline />
             <span className="ml-2 text-[15px]">
               Inicio
             </span>
           </p>
-          <p className="mb-3 mt-6 seccionItem">
-            <BsEnvelopePaper />
-            <span className="ml-2 text-[15px]">
-              Mi bandeja
-            </span>
-          </p>
-          <p className="mb-3 mt-6 seccionItem">
-            <HiOutlineDesktopComputer />
-            <span className="ml-2 text-[15px]">
-              Solicitar asistencia
-            </span>
-          </p>
-          <p className="mb-3 mt-6 seccionItem">
-            <RiFileListLine />
-            <span className="ml-2 text-[15px]">
-              Listado de solicitudes
-            </span>
-          </p>
+
+          {/* Configuraciones */}
           <Accordion type="multiple">
             <AccordionItem value="item-1">
               <AccordionTrigger>
@@ -58,18 +52,13 @@ export const Navbar = () => {
                 </div>
               </AccordionTrigger>
               <div>
-                <AccordionContent className="navItem">
-                  Dependencias
-                </AccordionContent>
-                <AccordionContent className="navItem">
-                  Tipos de solicitudes
-                </AccordionContent>
-                <AccordionContent className="navItem">
+                <AccordionContent onClick={ () => navegacion('/usuarios') } className="navItem">
                   Usuarios
                 </AccordionContent>
               </div>
             </AccordionItem>
           </Accordion>
+          
         </div>
       </div>
     </div>

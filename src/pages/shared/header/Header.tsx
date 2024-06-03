@@ -1,21 +1,19 @@
 
-import { useNavigate } from "react-router-dom"
-
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
 
+  const { logout, usuario } = useAuth();
   const navigate = useNavigate();
 
-  const cerrarSesion = () => {
-    // TODO: Eliminar elementos del localStorage
-    navigate("/auth/login");
-  }
+  const cerrarSesion = () => logout();
 
   return (
     <div>
@@ -27,15 +25,15 @@ export const Header = () => {
             <DropdownMenu>
               <DropdownMenuTrigger className="outline-none">
                 <Avatar className="cursor-pointer hover:opacity-80 w-14 h-14 ml-36">
-                  <AvatarImage src="https://www.gravatar.com/avatar/${randomHash}?d=retro&f=y&s=128" alt="@shadcn" />
+                  <AvatarImage src="https://www.gravatar.com/avatar/${randomHash}?d=retro&f=y&s=128" alt="Avatar" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="ml-20">
-                <DropdownMenuLabel> Moreno Lucas Omar </DropdownMenuLabel>
-                <p className="px-2 text-xs mb-2"> Administrador </p>
+                <DropdownMenuLabel> { usuario?.apellido } { usuario?.nombre } </DropdownMenuLabel>
+                <p className="px-2 text-xs mb-2"> { usuario?.role === 'ADMIN_ROLE' ? 'Administrador' : 'Empleado' } </p>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem> Mi perfil </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate('/perfil')}> Mi perfil </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => cerrarSesion()}> Cerrar sesion </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
