@@ -3,9 +3,9 @@ import { Navbar } from "../navbar/Navbar"
 
 export const Layout = ({ children }: any) => {
   return (
-    <div className="flex items-center">
+    <div className="flex">
       <Navbar />
-      <div className="h-screen w-full">
+      <div className="h-full w-full">
         <Header />
         {children}
       </div>

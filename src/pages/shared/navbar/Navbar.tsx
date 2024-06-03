@@ -24,9 +24,9 @@ export const Navbar = () => {
   }
 
   return (
-    <div>
-      <div className="w-[300px] border-r border-gray-300 h-screen bg-slate-100">
-        <div className="p-[27px] bg-slate-200 border-b border-gray-300 text-white">
+    <div className="h-screen">
+      <div className="w-[300px] border-r border-gray-300 h-full bg-slate-100">
+        <div className="p-[15px] bg-slate-200 border-b border-gray-300 text-white">
           <p className="px-2 text-lg text-slate-900 font-semibold text-center"> Equinoccio Technology </p>
           <p className="text-slate-800 text-center text-sm" > Template de sistema </p>
         </div>

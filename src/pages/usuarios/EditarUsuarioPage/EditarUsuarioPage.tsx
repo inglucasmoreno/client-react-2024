@@ -168,50 +168,52 @@ export const EditarUsuarioPage = () => {
                     )}
                   />
                 </div>
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel> <span className="text-red-500"> * </span> Email </FormLabel>
-                      <FormControl>
-                        <Input
-                          disabled={isLoading}
-                          placeholder="Ej. ing.lucasmoreno@gmail.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="role"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel> <span className="text-red-500"> * </span> Roles </FormLabel>
-                      <FormControl>
-                        <Select
-                          // disabled={isLoading}
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                          value={field.value}
-                        >
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Seleccionar un rol" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel> Roles </SelectLabel>
-                              <SelectItem value="ADMIN_ROLE"> Administrador </SelectItem>
-                              <SelectItem value="USER_ROLE"> Empleado </SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="md:grid md:grid-cols-2 md:gap-4">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel> <span className="text-red-500"> * </span> Email </FormLabel>
+                        <FormControl>
+                          <Input
+                            disabled={isLoading}
+                            placeholder="Ej. ing.lucasmoreno@gmail.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="role"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel> <span className="text-red-500"> * </span> Roles </FormLabel>
+                        <FormControl>
+                          <Select
+                            // disabled={isLoading}
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            value={field.value}
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Seleccionar un rol" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel> Roles </SelectLabel>
+                                <SelectItem value="ADMIN_ROLE"> Administrador </SelectItem>
+                                <SelectItem value="USER_ROLE"> Empleado </SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <FormField
                   control={form.control}
                   name="activo"

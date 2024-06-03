@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { IoAddOutline } from "react-icons/io5"
 import { useNavigate } from "react-router-dom"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -37,6 +38,8 @@ export function UsuariosDataTable<TData, TValue>({
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [estadoF, setEstadoF] = useState(undefined);
+  const [roleF, setRoleF] = useState(undefined);
 
   const navigate = useNavigate();
 
@@ -58,23 +61,72 @@ export function UsuariosDataTable<TData, TValue>({
   return (
     <div>
       <div className="flex items-center justify-between py-4">
-        <Input
-          placeholder="Filtro por apellido"
-          value={(table.getColumn("apellido")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("apellido")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        <div className="grid grid-cols-3 gap-4">
+          <Input
+            placeholder="Buscador"
+            value={(table.getColumn("apellido")?.getFilterValue() as string) ?? ""}
+            onChange={(event) => {
+              table.getColumn("apellido")?.setFilterValue(event.target.value);
+            }
+            }
+            className="max-w-sm"
+          />
+          <Select
+            value={estadoF}
+            onValueChange={(value: any) => {
+              setEstadoF(value);
+              if (value === "true") {
+                table.getColumn("activo")?.setFilterValue(true);
+              } else if (value === "false") {
+                table.getColumn("activo")?.setFilterValue(false);
+              } else {
+                table.getColumn("activo")?.setFilterValue(undefined);
+              }
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Estado" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel> Estados </SelectLabel>
+                <SelectItem value="all">Todos</SelectItem>
+                <SelectItem value="true">Activos</SelectItem>
+                <SelectItem value="false">Inactivos</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select
+            value={roleF}
+            onValueChange={(value: any) => {
+              setRoleF(value);
+              if(value === "all") table.getColumn("role")?.setFilterValue(undefined);
+              else table.getColumn("role")?.setFilterValue(value);
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Rol" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel> Rol </SelectLabel>
+                <SelectItem value="all">Todos</SelectItem>
+                <SelectItem value="ADMIN_ROLE"> Administrador </SelectItem>
+                <SelectItem value="USER_ROLE"> Empleado </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
         <div>
-          <Button onClick={ () => navigate('/usuarios/nuevo') } className="mr-2 pl-1 pr-2">
+          <Button onClick={() => navigate('/usuarios/nuevo')} className="mr-2 pl-1 pr-2">
             <IoAddOutline className="h-5 w-5" />
             <span className="ml-1">
-             Nuevo usuario
+              Nuevo usuario
             </span>
           </Button>
         </div>
       </div>
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>

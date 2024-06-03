@@ -3,16 +3,32 @@
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { IUsuarios } from "@/interface"
-import { ColumnDef } from "@tanstack/react-table"
+import { ColumnDef, FilterFn, Row } from "@tanstack/react-table"
 import { FiMoreHorizontal } from "react-icons/fi"
 import { GoLock } from "react-icons/go"
 import { GrEdit } from "react-icons/gr"
 import { useNavigate } from "react-router-dom"
 import { ArrowUpDown } from "lucide-react"
 
+const myCustomFilterFn: FilterFn<IUsuarios> = 
+(
+  row: Row<IUsuarios>, 
+  columnId: string, 
+  filterValue: string,
+   addMeta: (meta: any) => void
+) => {
+  console.log(addMeta);
+  console.log(columnId);
+  if(row.original.apellido.includes(filterValue.toUpperCase())) return true;
+  if(row.original.nombre.includes(filterValue.toUpperCase())) return true;
+  if(row.original.usuario.includes(filterValue)) return true;
+  return false;
+}
+
 export const UsuariosColumns: ColumnDef<IUsuarios>[] = [
   {
     accessorKey: "apellido",
+    filterFn: myCustomFilterFn,
     header: ({ column }) => {
       return (
         <Button
