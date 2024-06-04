@@ -24,7 +24,7 @@ export const Navbar = () => {
   }
 
   return (
-    <div className="h-screen">
+    <div className="h-screen hidden md:block">
       <div className="w-[300px] border-r border-gray-300 h-full bg-slate-100">
         <div className="p-[15px] bg-slate-200 border-b border-gray-300 text-white">
           <p className="px-2 text-lg text-slate-900 font-semibold text-center"> Equinoccio Technology </p>

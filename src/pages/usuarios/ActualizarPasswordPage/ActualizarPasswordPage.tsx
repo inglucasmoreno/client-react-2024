@@ -68,7 +68,7 @@ export const ActualizarPasswordPage = () => {
             <Card className="w-11/12 md:w-[450px] mt-5 md:mt-10">
 
               <CardHeader>
-                <CardTitle className="text-3xl flex items-center"> <GoLock /> <span className="ml-2"> Actualizar contraseña </span> </CardTitle>
+                <CardTitle className="text-2xl md:text-3xl flex items-center"> <GoLock /> <span className="ml-2"> Actualizar contraseña </span> </CardTitle>
                 <CardDescription> {usuario?.apellido} {usuario?.nombre} </CardDescription>
               </CardHeader>
 

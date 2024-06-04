@@ -66,7 +66,7 @@ export const NuevoUsuarioPage = () => {
         <Card className="w-11/12 md:w-[600px] mt-5 md:mt-5 mb-20">
 
           <CardHeader>
-            <CardTitle className="text-3xl flex items-center"> <LuUserPlus /> <span className="ml-2"> Creando usuario </span> </CardTitle>
+            <CardTitle className="text-2xl md:text-3xl flex items-center"> <LuUserPlus /> <span className="ml-2"> Creando usuario </span> </CardTitle>
             <CardDescription> Ingreso de usuario al sistema </CardDescription>
           </CardHeader>
 
@@ -139,7 +139,7 @@ export const NuevoUsuarioPage = () => {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="md:grid md:grid-cols-2 md:gap-4">
                   <FormField
                     control={form.control}
                     name="email"
@@ -159,7 +159,7 @@ export const NuevoUsuarioPage = () => {
                     control={form.control}
                     name="role"
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="mt-4 md:mt-0">
                         <FormLabel> <span className="text-red-500"> * </span> Roles </FormLabel>
                         <FormControl>
                           <Select
@@ -188,7 +188,7 @@ export const NuevoUsuarioPage = () => {
                   control={form.control}
                   name="password"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mt-4 md:mt-0">
                       <FormLabel> <span className="text-red-500"> * </span> Contraseña </FormLabel>
                       <FormControl>
                         <Input

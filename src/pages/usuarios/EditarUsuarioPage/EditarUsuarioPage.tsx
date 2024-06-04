@@ -93,7 +93,7 @@ export const EditarUsuarioPage = () => {
         <Card className="w-11/12 md:w-[600px] mt-5 md:mt-5 mb-20">
 
           <CardHeader>
-            <CardTitle className="text-3xl flex items-center"> <LiaUserEditSolid className="w-9 h-9" />
+            <CardTitle className="text-xl md:text-3xl flex items-center"> <LiaUserEditSolid className="w-9 h-9" />
               <span className="ml-2">
                 Editando usuario
               </span>
@@ -188,7 +188,7 @@ export const EditarUsuarioPage = () => {
                     control={form.control}
                     name="role"
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="mt-4 md:mt-0">
                         <FormLabel> <span className="text-red-500"> * </span> Roles </FormLabel>
                         <FormControl>
                           <Select
@@ -221,7 +221,7 @@ export const EditarUsuarioPage = () => {
                     <FormItem>
                       <FormLabel> <span className="text-red-500"> * </span> Estado </FormLabel>
                       <FormControl>
-                        <div className="flex items-center space-x-2 border p-4 shadow-sm rounded">
+                        <div className="flex items-center space-x-2 pt-2 rounded">
                           <Switch
                             id="airplane-mode"
                             checked={field.value}

@@ -44,7 +44,7 @@ export const LoginPage = () => {
     }
 
     return (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center h-screen">
             <Card className="w-11/12 md:w-[450px] mt-5 md:mt-10">
 
                 <CardHeader className="text-center">

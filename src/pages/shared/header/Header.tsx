@@ -17,7 +17,7 @@ export const Header = () => {
 
   return (
     <div>
-      <div className="py-2 px-10 bg-slate-100 border-b border-gray-300">
+      <div className="py-2 bg-slate-100 border-b border-gray-300">
         <div className="container flex items-center justify-between">
           {/* <span className="font-semibold text-xl"> Equinoccio Technology </span> */}
           <div></div>
