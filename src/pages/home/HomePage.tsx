@@ -4,8 +4,10 @@ import { Layout } from "../shared/layout/Layout"
 export const HomePage = () => {
   return (
     <Layout>
-      <div className="text-7xl font-semibold flex items-center mt-52 justify-center h-max">
-        <h1> Home Page </h1>
+      <div className="flex items-center mt-10 justify-center">
+        <div>
+          <h1 className="text-center text-4xl font-semibold"> HOME PAGE </h1>
+        </div>
       </div>
     </Layout>
   )

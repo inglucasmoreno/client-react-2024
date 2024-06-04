@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAuth } from "@/hooks/useAuth"
 import { z } from "zod"
+import { useEffect } from "react"
 
 const formSchema = z.object({
     username: z.string()
@@ -28,7 +29,7 @@ const formSchema = z.object({
 
 export const LoginPage = () => {
 
-    const { login, isLoading } = useAuth();
+    const { login, isLoading, setLoading } = useAuth();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -37,6 +38,10 @@ export const LoginPage = () => {
             password: "",
         },
     })
+
+    useEffect(() => {
+        setLoading(false)
+    }, []);
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         login(values);

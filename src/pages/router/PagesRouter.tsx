@@ -4,8 +4,11 @@ import { Navigate, Route, Routes } from "react-router-dom"
 import { HomePage } from "../home/HomePage"
 import { PerfilPage } from "../perfil/PerfilPage"
 import { ActualizarPasswordPage, EditarUsuarioPage, NuevoUsuarioPage, UsuariosPage } from "../usuarios"
+import { useAuth } from "@/hooks/useAuth"
 
 export const PagesRouter = () => {
+
+    const { usuario } = useAuth();
 
     return (
         <Routes>
@@ -16,10 +19,18 @@ export const PagesRouter = () => {
             <Route path="/home" element={<HomePage />} />
 
             {/* Usuarios */}
-            <Route path="/usuarios" element={<UsuariosPage />} />
-            <Route path="/usuarios/nuevo" element={<NuevoUsuarioPage />} />
-            <Route path="/usuarios/editar/:id" element={<EditarUsuarioPage />} />
-            <Route path="/usuarios/password/:id" element={<ActualizarPasswordPage />} />
+
+            {
+                usuario?.role === 'ADMIN_ROLE' && (
+                    <>
+                        <Route path="/usuarios" element={<UsuariosPage />} />
+                        <Route path="/usuarios/nuevo" element={<NuevoUsuarioPage />} />
+                        <Route path="/usuarios/editar/:id" element={<EditarUsuarioPage />} />
+                        <Route path="/usuarios/password/:id" element={<ActualizarPasswordPage />} />
+                    </>
+                )
+            }
+
 
             {/* <Route path="/*" element={ <Navigate to = "/" /> } /> */}
             <Route path="/*" element={<Navigate to="/home" />} />

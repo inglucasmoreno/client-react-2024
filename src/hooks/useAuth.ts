@@ -87,7 +87,8 @@ export const useAuth = () => {
     // Metodos
     login,
     logout,
-    checkAuthStore
+    checkAuthStore,
+    setLoading
 
   })
 
