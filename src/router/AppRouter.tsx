@@ -1,9 +1,14 @@
 import { Route, Routes } from "react-router-dom"
 
 import { AuthRouter } from "@/auth/router/AuthRouter"
+import { useAuth } from "@/hooks/useAuth";
 
 export const AppRouter = () => {
-   return (
+
+    const { checkAuthToken } = useAuth();
+    checkAuthToken();
+
+    return (
         <Routes>
             <Route path="/*" element={<AuthRouter />} />
         </Routes>

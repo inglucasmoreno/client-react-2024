@@ -27,7 +27,7 @@ export const useAuthStore = create<AuthState>()(
                 token: null,
                 usuario: null,
                 isLoading: false,
-                status: 'checking',
+                status: 'not-authenticated',
                 
                 setLoading: (loadingState: boolean) => set({ 
                     isLoading: loadingState,
@@ -44,7 +44,7 @@ export const useAuthStore = create<AuthState>()(
                     token: null,
                     usuario: null,
                     isLoading: false,
-                    status: 'authenticated',
+                    status: 'not-authenticated',
                 }),
             
             })

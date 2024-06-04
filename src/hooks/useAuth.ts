@@ -51,29 +51,33 @@ export const useAuth = () => {
   }
 
   // Verificacion de sesion activa
-  const checkAuthStore = async () => {
+  const checkAuthToken = async () => {
 
     const dataStorageString = localStorage.getItem('auth-store');
-
+    
     let token: string | null = null;
-
+    
     // Convertir token a objeto
     if (dataStorageString) {
       const dataStorage = JSON.parse(dataStorageString);
       token = dataStorage.state.token;
     }
+    
+    console.log(token);
 
     // El token no existe
     // Cerrar sesion - Logout
-    if (!token) return logoutStore({});
+    if (!token) return logout();
 
-    // El token existe
-    try {
-      const { data } = await backendApi.get("profile");
-      loginStore(data);
-    } catch (error) {
-      logoutStore({})
-    }
+    console.log('Hay token');
+
+    // // El token existe
+    // try {
+    //   const { data } = await backendApi.get("profile");
+    //   loginStore(data);
+    // } catch (error) {
+    //   logout();
+    // }
 
   }
 
@@ -87,7 +91,7 @@ export const useAuth = () => {
     // Metodos
     login,
     logout,
-    checkAuthStore,
+    checkAuthToken,
     setLoading
 
   })
