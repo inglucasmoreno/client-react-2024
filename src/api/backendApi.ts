@@ -7,7 +7,7 @@ export const backendApi = axios.create({
 
 backendApi.interceptors.request.use( (config: any) => {
     
-    const dataAuthString = localStorage.getItem('auth-store');
+    const dataAuthString =   localStorage.getItem('auth-store');
     
     let token: string = '';
     // let userLogin: string = '';

@@ -62,22 +62,22 @@ export const useAuth = () => {
       const dataStorage = JSON.parse(dataStorageString);
       token = dataStorage.state.token;
     }
-    
-    console.log(token);
 
     // El token no existe
     // Cerrar sesion - Logout
-    if (!token) return logout();
+    // if (!token) return logout();
 
     console.log('Hay token');
 
-    // // El token existe
-    // try {
-    //   const { data } = await backendApi.get("profile");
-    //   loginStore(data);
-    // } catch (error) {
-    //   logout();
-    // }
+    // El token existe
+    try {
+      const { data } = await backendApi.get("profile");
+      console.log(data);
+      loginStore(data);
+    } catch (error) {
+      console.log(error)
+      logout();
+    }
 
   }
 

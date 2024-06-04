@@ -3,8 +3,6 @@ import { LoginPage } from "../login/LoginPage"
 import { InitPage } from "../init/InitPage"
 import { PagesRouter } from "@/pages/router/PagesRouter"
 
-
-
 export const AuthRouter = () => {
   return (
     <Routes>
